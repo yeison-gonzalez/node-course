@@ -6,11 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "start:dev": "echo 'Hola mundo desde dev'"
+    "start:dev": "echo 'Hola mundo desde dev'",
+    "dev": "nodemon src/app.js"
   },
   "author": "Yeison Gonzalez",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "get-age": "^1.0.1",
+    "uuid": "^9.0.1"
   }
 }
