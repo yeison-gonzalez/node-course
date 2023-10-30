@@ -4,7 +4,8 @@
 // const { getUserById } = require('./js-foundation/03-callbacks')
 // const { getUserById } = require('./js-foundation/04-arrow')
 // const { buildMakePerson } = require('./js-foundation/05-factory')
-const getPokemonById = require('./js-foundation/06-promises')
+// const getPokemonById = require('./js-foundation/06-promises')
+const { buildLogger } = require('./plugins')
 
 /*
 const id = 1
@@ -23,8 +24,13 @@ const jhon = makePerson(obj)
 console.log({ jhon })
  */
 
-
+/* 
 getPokemonById(1)
     .then(pokemon => console.log(pokemon))
     .catch(err => console.log('Please try again'))
     .finally(() => console.log('Finally'))
+ */
+
+const logger = buildLogger('app.js')
+logger.log('Hello world')
+logger.error('Bad request')
