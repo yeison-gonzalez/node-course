@@ -10,6 +10,7 @@ const fileSystemLogRepository = new LogRespositoryImpl(
 export class Server {
   static start() {
     console.log('Server started...')
+
     CronService.createJob(
       '*/5 * * * * *',
       () => {

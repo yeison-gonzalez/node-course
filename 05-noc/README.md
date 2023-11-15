@@ -11,3 +11,5 @@ PORT=
 MAILER_EMAIL=
 MAILER_SECRET_KEY=
 ```
+3. Ejectura el comando ``` npm i ```
+4. Ejectur el comando ``` npm run dev ```
