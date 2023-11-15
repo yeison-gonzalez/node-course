@@ -27,9 +27,7 @@ export class EmailService {
     }
   });
 
-  constructor(
-    private readonly logRespository: LogRepository
-  ) {}
+  constructor() {}
 
   async sendEmail(options: SendMailOptions): Promise<boolean> {
     const { to, subject, htmlBody, attachments = [] } = options;
@@ -41,27 +39,13 @@ export class EmailService {
         attachments
       });
 
-      const log = new LogEntity({
-        level: LogSeverityLevel.low,
-        message: 'Email sent',
-        origin: 'email.service.ts'
-      })
-      this.logRespository.saveLog(log)
-
       return true;
     } catch (error) {
-      const log = new LogEntity({
-        level: LogSeverityLevel.high,
-        message: 'Email not sent',
-        origin: 'email.service.ts'
-      })
-      this.logRespository.saveLog(log)
-
       return false;
     }
   }
 
-  async sendEmailWithFileSystemLogs(to: string | string[]) {
+  async sendEmailWithFileSystemLogs(to: string | string[]): Promise<boolean> {
     const subject = 'Logs server'
     const htmlBody = `
       <h3>Logs de sistema - NOC</h3>
@@ -75,7 +59,7 @@ export class EmailService {
       { filename: 'logs-high.log', path: './logs/logs-high.log' },
     ];
 
-    this.sendEmail({
+    return this.sendEmail({
       to,
       subject,
       htmlBody,
