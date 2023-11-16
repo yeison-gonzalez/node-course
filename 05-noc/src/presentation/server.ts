@@ -15,6 +15,8 @@ const emailService = new EmailService();
 export class Server {
   static start() {
     console.log('Server started...')
+
+    // Send Email
     /* new SendEmailLogs(emailService, fileSystemLogRepository).execute(envs.MAILER_EMAIL); */
 
     CronService.createJob(

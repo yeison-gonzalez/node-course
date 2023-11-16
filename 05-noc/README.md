@@ -13,3 +13,7 @@ MAILER_SECRET_KEY=
 ```
 3. Ejectura el comando ``` npm i ```
 4. Ejectur el comando ``` npm run dev ```
+
+# Obtener key gmail para envio de correos
+
+[Google AppPasswords](https://myaccount.google.com/apppasswords)
