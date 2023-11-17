@@ -10,6 +10,7 @@ El objetivo es crear una serie de tareas usando Arquitectura Limpia con Typescri
   ```
   docker compose up -d
   ```
+5. Ejecutar el comando ``` npx prisma migrate dev ```
 5. Ejectur el comando ``` npm run dev ```
 
 # Obtener key gmail para envio de correos
