@@ -39,13 +39,28 @@ export class TodosController {
   public updateTodo = (req: Request, res: Response) => {
     const { id } = req.params;
     const { text } = req.body;
+    
+    if (isNaN(+id)) return res.status(400).json({ error: 'ID argument is not a number' });
+
     const todo = todos.find(todo => todo.id === +id);
 
-    if (isNaN(+id)) return res.status(400).json({ error: 'ID argument is not a number' });
     if (!text) return res.status(400).json({ error: 'Text property is required' });
     if (!todo) return res.status(404).json({ error: `TODO with id:${id} not found` });
     
     todo.text = text || todo.text;
+
+    return res.json(todo);
+  }
+
+  public deleteTodo = (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    if (isNaN(+id)) return res.status(400).json({ error: 'ID argument is not a number' });
+
+    const todo = todos.find(todo => todo.id === +id);
+    if (!todo) return res.status(404).json({ error: `TODO with id:${id} not found` });
+
+    todos.splice(todos.indexOf(todo), 1);
 
     return res.json(todo);
   }
