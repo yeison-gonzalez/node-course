@@ -20,4 +20,33 @@ export class TodosController {
     if (todo) return res.json(todo);
     return res.status(404).json({ error: `TODO with id:${id} not found` });
   }
+
+  public createTodo = (req: Request, res: Response) => {
+    const { text } = req.body;
+
+    if (!text) return res.status(400).json({ error: 'Text property is required' });
+
+    const newTodo = {
+      id: todos.length + 1,
+      text,
+      createdAt: new Date(),
+    }
+
+    todos.push(newTodo)
+    return res.json(newTodo);
+  }
+
+  public updateTodo = (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    const todo = todos.find(todo => todo.id === +id);
+
+    if (isNaN(+id)) return res.status(400).json({ error: 'ID argument is not a number' });
+    if (!text) return res.status(400).json({ error: 'Text property is required' });
+    if (!todo) return res.status(404).json({ error: `TODO with id:${id} not found` });
+    
+    todo.text = text || todo.text;
+
+    return res.json(todo);
+  }
 }
