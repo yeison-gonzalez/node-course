@@ -57,7 +57,7 @@ describe('Todo route testing', () => {
     expect(body).toEqual({ error: `Todo with id: ${todoId} not found` })
   });
 
-  test('should return a new Todo api/todos', async () => {
+  test('should return a new TODO api/todos', async () => {
     const { body } = await request(testServer.app)
       .post('/api/todos')
       .send(todo1)
@@ -87,4 +87,65 @@ describe('Todo route testing', () => {
     
     expect(body).toEqual({ error: 'Text property is required' });
   });
+
+  test('should return an updated TODO api/todos/:id', async () => {
+    const todo = await prisma.todo.create({ data: todo1 });
+
+    const { body } = await request(testServer.app)
+      .put(`/api/todos/${todo.id}`)
+      .send({ text: 'Test', completedAt: '2023-10-21'})
+      .expect(200);
+    
+    expect(body).toEqual({
+      id: expect.any(Number),
+      text: 'Test',
+      completedAt: "2023-10-21T00:00:00.000Z",
+    });
+  });
+
+  test('should return 404 if TODO not found', async () => {
+    const todoId = 999;
+    const { body } = await request(testServer.app)
+      .put(`/api/todos/${todoId}`)
+      .send({ text: 'Test' })
+      .expect(400)
+    
+    expect(body).toEqual({ error: 'Todo with id: 999 not found' });
+  });
+
+  test('should return an updated TODO only the date', async() => {
+    const todo = await prisma.todo.create({ data: todo1 });
+    const { body } = await request(testServer.app)
+      .put(`/api/todos/${todo.id}`)
+      .send({ completedAt: '2023-12-04' })
+      .expect(200)
+    
+    expect(body).toEqual({
+      id: expect.any(Number),
+      text: todo1.text,
+      completedAt: "2023-12-04T00:00:00.000Z",
+    })
+  })
+
+  test('should delete a TODO deleted api/todos/:id', async () => {
+    const todo = await prisma.todo.create({ data: todo1 });
+    const { body } = await request(testServer.app)
+      .delete(`/api/todos/${todo.id}`)
+      .expect(200)
+    
+    expect(body).toEqual({
+      id: expect.any(Number),
+      text: todo.text,
+      completedAt: null
+    })
+  })
+
+  test('should return 404 if TODO do not exist api/todos/:id', async () => {
+    const todoId = 999
+    const { body } = await request(testServer.app)
+      .delete(`/api/todos/${todoId}`)
+      .expect(400)
+    
+    expect(body).toEqual({ error: "Todo with id: 999 not found" })
+  })
 });
