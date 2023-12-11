@@ -14,9 +14,11 @@ export class AuthService {
       user.password = bcryptAdapter.hash(registerUserDto.password);
       await user.save();
       const { password, ...userEntity } = UserEntity.fromObject(user);
+      const token = await JwtAdapter.generateToken({ id: user.id });
+      if (!token) throw CustomError.internalServer('Error while creating JWT');
       return {
         user: userEntity,
-        token: 'ABD',
+        token,
       };
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
@@ -31,7 +33,7 @@ export class AuthService {
       const hasMatch = bcryptAdapter.compare(loginUserDto.password, user.password);
       if (!hasMatch) throw CustomError.badRequest('Credentials are wrong');
       const { password, ...userEntity } = UserEntity.fromObject(user);
-      const token = await JwtAdapter.generateToken({ id: user.id, email: user.email });
+      const token = await JwtAdapter.generateToken({ id: user.id });
       if (!token) throw CustomError.internalServer('Error while creating JWT');
       return {
         user: userEntity,
