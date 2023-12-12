@@ -15,7 +15,7 @@ export class CategoryService {
       });
 
       await category.save();
-      
+
       return {
         id: category.id,
         name: category.name,
@@ -23,6 +23,20 @@ export class CategoryService {
       }
     } catch (error) {
       throw CustomError.internalServer(`${error}`);
+    }
+  }
+
+  async getCategories() {
+    try {
+      const categories = await CategoryModel.find()
+
+      return categories?.map(category => ({
+        id: category.id,
+        name: category.name,
+        available: category.available,
+      })) || [];
+    } catch (error) {
+      throw CustomError.internalServer('Interval Server Error');
     }
   }
 }

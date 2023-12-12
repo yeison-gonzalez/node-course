@@ -8,7 +8,7 @@ const categorySchema = new mongoose.Schema({
   },
   available: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   user: {
     type: Schema.Types.ObjectId,
