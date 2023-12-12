@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import { CreateCategoryDto, CustomError } from '../../domain';
-import { AuthService } from '../services/auth.service';
 import { CategoryService } from '../services';
 
 export class CategoryController {
