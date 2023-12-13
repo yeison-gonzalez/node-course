@@ -22,16 +22,17 @@ export class ProductController {
     this.productService.getProducts(paginationDto!)
       .then(products => res.json(products))
       .catch(error => this.handleError(error, res));
-    return res.json('Get products')
   }
 
   createProduct = async (req: Request, res: Response) => {
-    const [error, createProductDto] = CreateProductDto.create(req.body)
+    const [error, createProductDto] = CreateProductDto.create({
+      ...req.body,
+      user: req.body.user.id,
+    })
     if (error) return res.status(400).json({ error });
   
     this.productService.createProduct(createProductDto!)
       .then(product => res.status(201).json(product))
       .catch(error => this.handleError(error, res));
-    return res.json('Create product')
   }
 }
