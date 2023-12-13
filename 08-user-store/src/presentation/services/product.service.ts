@@ -28,6 +28,8 @@ export class ProductService {
         ProductModel.find()
           .skip((page - 1) * limit)
           .limit(limit)
+          .populate('user')
+          .populate('category')
       ]);
 
       return {
