@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { FileUploadController } from './controller';
-import { AuthMiddleware } from '../middlewares/auth.middleware';
 
 export class FileUploadRoutes {
   static get routes(): Router {
@@ -14,4 +13,3 @@ export class FileUploadRoutes {
     return router;
   }
 }
-
