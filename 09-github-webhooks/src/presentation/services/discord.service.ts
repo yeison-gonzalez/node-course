@@ -8,6 +8,11 @@ export class DiscordService {
   async notify(message: string) {
     const body = {
       content: message,
+      embeds: [
+        {
+          image: { url: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTVmYzFhdGNrajJsY3ZjaWFzbjZnZmg0a3Y4YWEzaWg5dG5raWh5cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6WMMlu1pQlZHlqGpQx/giphy.gif' }
+        }
+      ]
     };
 
     const response = await fetch(this.discordWebhookUrl, {
