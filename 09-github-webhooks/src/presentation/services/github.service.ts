@@ -5,7 +5,7 @@ export class GitHubService {
   
   onStar(payload: GitHubStarPayload): string {
     const { sender, repository, action } = payload;
-    return `User ${sender.login} ${action} start on ${repository.full_name}`;
+    return `User ${sender.login} ${action} star on ${repository.full_name}`;
   }
 
   onIssue(payload: GitHubIssuePayload): string {
