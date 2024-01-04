@@ -12,6 +12,10 @@ wss.on('connection', function connection(ws) {
   });
 
   ws.send('Hello from server');
+
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  })
 });
 
 console.log('Server running on port http://localhost:3000');
