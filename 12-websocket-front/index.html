@@ -17,9 +17,16 @@
     const socket = new WebSocket('ws://localhost:3000');
     const form = document.querySelector('form');
     const input  = document.querySelector('input');
+    const messagesElem = document.querySelector('#message')
 
     function sendMessage (message) {
       socket.send(message);
+    }
+
+    function renderMessage (message) {
+      const li = document.createElement('li');
+      li.innerHTML = message;
+      messagesElem.prepend(li);
     }
 
     form.addEventListener('submit', (event) => {
@@ -35,6 +42,12 @@
     socket.onclose = (event) => {
       console.log('Disconnected');
     }
+
+    socket.onmessage = (event) => {
+      const { payload } = JSON.parse(event.data);
+      renderMessage(payload);
+    }
+
   </script>
 </body>
 </html>
